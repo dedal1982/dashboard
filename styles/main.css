@@ -1,59 +1,140 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300..700;1,300..700&display=swap");
 body {
-  font-family: "Cormorant", serif;
-  margin: 20px;
-}
-
-.controls {
-  margin-bottom: 20px;
-}
-
-button {
   font-family: "Cormorant Infant", serif;
-  padding: 8px 16px;
-  margin-right: 10px;
-  cursor: pointer;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  background: azure;
+  font-size: 16px;
+}
+.page {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-button:hover {
-  background-color: #45a049;
+.header h1 {
+  color: red;
+  font-size: clamp(2rem, 3vw, 4rem);
+  text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+  text-align: center;
 }
-
-.dashboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+.navigation {
+  width: 100%;
+  margin: 3% auto;
+  display: flex;
+  justify-content: center;
+  gap: 3%;
 }
-
 .widget {
+  width: 100%;
   padding: 15px;
+  box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #fafafa;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  background: azure;
 }
 
-.todo ul {
-  list-style: none;
-  padding: 0;
+.button-top {
+  background-color: #0078d0;
+  border: 0;
+  border-radius: 56px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: system-ui, -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu,
+    "Helvetica Neue", sans-serif;
+  font-size: clamp(0.8rem, 3vw, 1.2rem);
+  font-weight: 600;
+  outline: 0;
+  padding: 10px 18px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-.todo li {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
+.button-top:before {
+  background-color: initial;
+  background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+  border-radius: 125px;
+  content: "";
+  height: 50%;
+  left: 4%;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s;
+  width: 92%;
 }
 
-.todo li button {
-  margin-left: 10px;
-  background-color: #f44336;
+.button-top:hover {
+  box-shadow: rgba(255, 255, 255, 0.2) 0 3px 15px inset,
+    rgba(0, 0, 0, 0.1) 0 3px 5px, rgba(0, 0, 0, 0.1) 0 10px 13px;
+  transform: scale(1.05);
 }
 
-.todo li button:hover {
-  background-color: #d32f2f;
+@media (min-width: 768px) {
+  .button-top {
+    padding: 16px 48px;
+  }
+}
+
+.button-top:hover {
+  background: #f6f9fe;
+  color: #174ea6;
+}
+
+.button-top:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%),
+    0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+.dashboard {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(auto, 1fr));
+  gap: 2rem 2rem;
+}
+input[type="text"] {
+  width: 75%;
+  padding: 14px 18px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1.8px solid #bdc3c7;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  color: #000;
+  text-shadow: rgb(51 43 43 / 19%) 0px 3px 3px;
+}
+input[type="text"]:focus {
+  border-color: #0078d0;
+}
+input[type="text"]:focus::placeholder {
+  color: transparent;
+  text-shadow: none;
+}
+@media screen and (max-width: 900px) {
+  .page {
+    padding: 0 1rem;
+  }
+  .dashboard {
+    grid-template-columns: repeat(2, minmax(auto, 1fr));
+    gap: 1rem 1rem;
+  }
+}
+@media screen and (max-width: 767px) {
+  .dashboard {
+    grid-template-columns: repeat(1, minmax(auto, 1fr));
+    gap: 1rem 1rem;
+  }
 }

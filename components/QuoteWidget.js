@@ -1,13 +1,12 @@
-// components/QuoteWidget.js
 import UIComponent from "./UIComponent.js";
 
 export default class QuoteWidget extends UIComponent {
-  constructor(title, id) {
+  constructor({ title, id }) {
     super(title, id);
     this.quote = "";
   }
 
-  render() {
+  render = () => {
     this.element = document.createElement("div");
     this.element.className = "widget quote";
 
@@ -29,9 +28,9 @@ export default class QuoteWidget extends UIComponent {
     this.loadQuote();
 
     return this.element;
-  }
+  };
 
-  loadQuote() {
+  loadQuote = () => {
     // В реальном приложении сюда можно делать запрос к API
     const quotes = [
       "Жизнь — это 10% того, что с тобой происходит, и 90% того, как ты на это реагируешь.",
@@ -40,7 +39,7 @@ export default class QuoteWidget extends UIComponent {
     ];
     const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
     this.quoteText.textContent = `"${randomQuote}"`;
-  }
+  };
 
   destroy() {
     super.destroy();

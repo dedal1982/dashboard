@@ -1,4 +1,3 @@
-// components/Dashboard.js
 import ToDoWidget from "./ToDoWidget.js";
 import QuoteWidget from "./QuoteWidget.js";
 

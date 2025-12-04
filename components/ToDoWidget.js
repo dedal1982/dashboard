@@ -1,13 +1,12 @@
-// components/ToDoWidget.js
 import UIComponent from "./UIComponent.js";
 
 export default class ToDoWidget extends UIComponent {
-  constructor(title, id) {
+  constructor({ title, id }) {
     super(title, id);
     this.tasks = [];
   }
 
-  render() {
+  render = () => {
     this.element = document.createElement("div");
     this.element.className = "widget todo";
 
@@ -31,18 +30,18 @@ export default class ToDoWidget extends UIComponent {
     this.element.appendChild(this.list);
 
     return this.element;
-  }
+  };
 
-  addTask() {
+  addTask = () => {
     const taskText = this.input.value.trim();
     if (taskText) {
       this.tasks.push(taskText);
       this.renderTask(taskText);
       this.input.value = "";
     }
-  }
+  };
 
-  renderTask(taskText) {
+  renderTask = (taskText) => {
     const li = document.createElement("li");
     li.textContent = taskText;
 
@@ -54,12 +53,12 @@ export default class ToDoWidget extends UIComponent {
 
     li.appendChild(deleteBtn);
     this.list.appendChild(li);
-  }
+  };
 
-  deleteTask(li, taskText) {
+  deleteTask = (li, taskText) => {
     this.tasks = this.tasks.filter((t) => t !== taskText);
     this.list.removeChild(li);
-  }
+  };
 
   destroy() {
     super.destroy();

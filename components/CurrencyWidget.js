@@ -16,7 +16,6 @@ export default class CurrencyWidget extends UIComponent {
     header.textContent = this.title.title || "Без названия";
     console.log("Title:", this.title);
 
-    // Поле поиска
     this.searchInput = document.createElement("input");
     this.searchInput.type = "text";
     this.searchInput.placeholder = "Поиск валюты...";
@@ -34,7 +33,6 @@ export default class CurrencyWidget extends UIComponent {
 
     this.refreshBtn.addEventListener("click", () => this.fetchRates());
 
-    // Первый запуск при создании
     this.fetchRates();
 
     return this.element;
@@ -45,7 +43,7 @@ export default class CurrencyWidget extends UIComponent {
       .then((response) => response.json())
       .then((data) => {
         this.rates = data.rates;
-        this.filterRates(); // отображаем сразу с учетом поиска
+        this.filterRates();
       })
       .catch((error) => {
         this.list.innerHTML = "<li>Ошибка загрузки данных</li>";

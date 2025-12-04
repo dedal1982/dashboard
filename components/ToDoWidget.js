@@ -2,7 +2,7 @@ import UIComponent from "./UIComponent.js";
 
 export default class ToDoWidget extends UIComponent {
   constructor({ title, id }) {
-    super(title, id);
+    super({ title, id });
     this.tasks = [];
   }
 
@@ -12,6 +12,30 @@ export default class ToDoWidget extends UIComponent {
 
     const header = document.createElement("h3");
     header.textContent = this.title;
+
+    const controlsContainer = document.createElement("div");
+    controlsContainer.style.display = "flex";
+    controlsContainer.style.justifyContent = "flex-end";
+    controlsContainer.style.gap = "5px";
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Удалить";
+    deleteBtn.onclick = () => this.destroy();
+
+    const collapseBtn = document.createElement("button");
+    collapseBtn.textContent = "Свернуть";
+    collapseBtn.onclick = () => {
+      const content = this.element.querySelector(".content");
+      if (content) {
+        content.style.display = content.style.display === "none" ? "" : "none";
+      }
+    };
+
+    controlsContainer.appendChild(collapseBtn);
+    controlsContainer.appendChild(deleteBtn);
+
+    const contentDiv = document.createElement("div");
+    contentDiv.className = "content";
 
     this.input = document.createElement("input");
     this.input.type = "text";
@@ -24,10 +48,13 @@ export default class ToDoWidget extends UIComponent {
 
     addBtn.addEventListener("click", () => this.addTask());
 
+    contentDiv.appendChild(this.input);
+    contentDiv.appendChild(addBtn);
+    contentDiv.appendChild(this.list);
+
     this.element.appendChild(header);
-    this.element.appendChild(this.input);
-    this.element.appendChild(addBtn);
-    this.element.appendChild(this.list);
+    this.element.appendChild(controlsContainer);
+    this.element.appendChild(contentDiv);
 
     return this.element;
   };

@@ -7,11 +7,10 @@ export default class UIComponent {
     }
     this.title = title;
     this.id = id;
-    this.element = null; // DOM-элемент компонента
+    this.element = null;
   }
 
   render() {
-    // Пока возвращает пустой div
     this.element = document.createElement("div");
     this.element.id = this.id;
     return this.element;

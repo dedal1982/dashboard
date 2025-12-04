@@ -9,3 +9,7 @@ document.getElementById("add-todo-btn").addEventListener("click", () => {
 document.getElementById("addQuote").addEventListener("click", () => {
   dashboard.addWidget("quote");
 });
+
+document.getElementById("addCurrency").addEventListener("click", () => {
+  dashboard.addWidget("currency");
+});

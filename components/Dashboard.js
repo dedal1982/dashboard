@@ -1,5 +1,6 @@
 import ToDoWidget from "./ToDoWidget.js";
 import QuoteWidget from "./QuoteWidget.js";
+import CurrencyWidget from "./CurrencyWidget.js";
 
 export default class Dashboard {
   constructor(containerId) {
@@ -14,12 +15,21 @@ export default class Dashboard {
 
     switch (widgetType) {
       case "todo":
-        widget = new ToDoWidget("Список задач", id);
+        widget = new ToDoWidget({ title: "Список задач", id });
         break;
 
       case "quote":
-        widget = new QuoteWidget("Цитата", id);
+        widget = new QuoteWidget({ title: "Цитата", id });
         break;
+
+      case "currency":
+        widget = new CurrencyWidget({
+          title: "Курс валют",
+          id,
+          baseCurrency: "USD",
+        });
+        break;
+
       default:
         console.warn(`Unknown widget type: ${widgetType}`);
         return;

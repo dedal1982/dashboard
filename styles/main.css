@@ -13,11 +13,9 @@ body {
   display: flex;
   flex-direction: column;
 }
-
 ::-webkit-scrollbar {
   width: 0;
 }
-
 .header h1 {
   color: red;
   font-size: clamp(2rem, 3vw, 4rem);
@@ -47,6 +45,13 @@ body {
 .widget H3 {
   text-transform: uppercase;
 }
+.content p {
+  margin-left: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.currency-rate span {
+  font-family: Arial, Helvetica, sans-serif;
+}
 #dashboard-container ul {
   margin-top: 15px;
   max-height: 300px;
@@ -75,7 +80,6 @@ body {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
-
 .button-top:before {
   background-color: initial;
   background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
@@ -89,7 +93,6 @@ body {
   transition: all 0.3s;
   width: 92%;
 }
-
 .button-top:hover {
   box-shadow: rgba(255, 255, 255, 0.2) 0 3px 15px inset,
     rgba(0, 0, 0, 0.1) 0 3px 5px, rgba(0, 0, 0, 0.1) 0 10px 13px;
@@ -176,31 +179,24 @@ body {
   overflow: hidden;
 }
 .task-list li span {
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   color: #000;
   width: 50%;
   overflow: hidden;
 }
 .currency-info {
-  margin: 16px 0 8px 16px;
+  margin: 16px 0 16px 8px;
 }
-@media (min-width: 768px) {
-  .button-top {
-    padding: 16px 48px;
-  }
-}
-
 .button-top:hover {
   background: #f6f9fe;
   color: #174ea6;
 }
-
 .button-top:active {
   box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%),
     0 8px 12px 6px rgb(60 64 67 / 15%);
   outline: none;
 }
-
 .dashboard {
   width: 100%;
   display: grid;
@@ -224,6 +220,11 @@ input[type="text"]:focus {
 input[type="text"]:focus::placeholder {
   color: transparent;
   text-shadow: none;
+}
+@media (min-width: 768px) {
+  .button-top {
+    padding: 16px 48px;
+  }
 }
 @media screen and (max-width: 900px) {
   .page {

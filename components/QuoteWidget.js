@@ -13,6 +13,33 @@ export default class QuoteWidget extends UIComponent {
     const header = document.createElement("h3");
     header.textContent = this.title;
 
+    // Контейнер для кнопок управления
+    const controlsContainer = document.createElement("div");
+    controlsContainer.style.display = "flex";
+    controlsContainer.style.justifyContent = "flex-end";
+    controlsContainer.style.gap = "5px";
+
+    // Кнопка "Удалить"
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Удалить";
+    deleteBtn.onclick = () => this.destroy();
+
+    // Кнопка "Свернуть"
+    const collapseBtn = document.createElement("button");
+    collapseBtn.textContent = "Свернуть";
+    collapseBtn.onclick = () => this.minimize();
+
+    controlsContainer.appendChild(collapseBtn);
+    controlsContainer.appendChild(deleteBtn);
+
+    // Обертка для кнопок
+    const controlsWrapper = document.createElement("div");
+    controlsWrapper.appendChild(controlsContainer);
+
+    // Основное содержимое
+    const contentDiv = document.createElement("div");
+    contentDiv.className = "content";
+
     this.quoteText = document.createElement("p");
     this.quoteText.textContent = "Здесь будет цитата";
 
@@ -21,9 +48,12 @@ export default class QuoteWidget extends UIComponent {
 
     refreshBtn.addEventListener("click", () => this.loadQuote());
 
+    contentDiv.appendChild(this.quoteText);
+    contentDiv.appendChild(refreshBtn);
+
     this.element.appendChild(header);
-    this.element.appendChild(this.quoteText);
-    this.element.appendChild(refreshBtn);
+    this.element.appendChild(controlsWrapper);
+    this.element.appendChild(contentDiv);
 
     this.loadQuote();
 
@@ -42,5 +72,9 @@ export default class QuoteWidget extends UIComponent {
 
   destroy() {
     super.destroy();
+  }
+
+  minimize() {
+    super.minimize();
   }
 }

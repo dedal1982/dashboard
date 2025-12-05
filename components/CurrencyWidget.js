@@ -14,7 +14,33 @@ export default class CurrencyWidget extends UIComponent {
 
     const header = document.createElement("h3");
     header.textContent = this.title.title || "Без названия";
-    console.log("Title:", this.title);
+
+    // Контейнер для кнопок управления
+    const controlsContainer = document.createElement("div");
+    controlsContainer.style.display = "flex";
+    controlsContainer.style.justifyContent = "flex-end";
+    controlsContainer.style.gap = "5px";
+
+    // Кнопка "Удалить"
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Удалить";
+    deleteBtn.onclick = () => this.destroy();
+
+    // Кнопка "Свернуть"
+    const collapseBtn = document.createElement("button");
+    collapseBtn.textContent = "Свернуть";
+    collapseBtn.onclick = () => this.minimize();
+
+    controlsContainer.appendChild(collapseBtn);
+    controlsContainer.appendChild(deleteBtn);
+
+    // Элемент для управления виджетом
+    const controlsWrapper = document.createElement("div");
+    controlsWrapper.appendChild(controlsContainer);
+
+    // Основное содержимое
+    const contentDiv = document.createElement("div");
+    contentDiv.className = "content";
 
     this.searchInput = document.createElement("input");
     this.searchInput.type = "text";
@@ -26,10 +52,13 @@ export default class CurrencyWidget extends UIComponent {
 
     this.list = document.createElement("ul");
 
+    contentDiv.appendChild(this.searchInput);
+    contentDiv.appendChild(this.refreshBtn);
+    contentDiv.appendChild(this.list);
+
     this.element.appendChild(header);
-    this.element.appendChild(this.searchInput);
-    this.element.appendChild(this.refreshBtn);
-    this.element.appendChild(this.list);
+    this.element.appendChild(controlsWrapper);
+    this.element.appendChild(contentDiv);
 
     this.refreshBtn.addEventListener("click", () => this.fetchRates());
 
@@ -73,5 +102,9 @@ export default class CurrencyWidget extends UIComponent {
 
   destroy() {
     super.destroy();
+  }
+
+  minimize() {
+    super.minimize();
   }
 }

@@ -22,4 +22,15 @@ export default class UIComponent {
     }
     this.element = null;
   }
+
+  minimize() {
+    const content = this.element.querySelector(".content");
+    if (content) {
+      if (content.style.display === "none") {
+        content.style.display = "";
+      } else {
+        content.style.display = "none";
+      }
+    }
+  }
 }

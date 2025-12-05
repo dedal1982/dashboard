@@ -11,7 +11,7 @@ export default class ToDoWidget extends UIComponent {
     this.element.className = "widget todo";
 
     const header = document.createElement("h3");
-    header.textContent = this.title;
+    header.textContent = this.title.title;
 
     const controlsContainer = document.createElement("div");
     controlsContainer.style.display = "flex";
@@ -24,12 +24,7 @@ export default class ToDoWidget extends UIComponent {
 
     const collapseBtn = document.createElement("button");
     collapseBtn.textContent = "Свернуть";
-    collapseBtn.onclick = () => {
-      const content = this.element.querySelector(".content");
-      if (content) {
-        content.style.display = content.style.display === "none" ? "" : "none";
-      }
-    };
+    collapseBtn.onclick = () => this.minimize();
 
     controlsContainer.appendChild(collapseBtn);
     controlsContainer.appendChild(deleteBtn);
@@ -70,24 +65,49 @@ export default class ToDoWidget extends UIComponent {
 
   renderTask = (taskText) => {
     const li = document.createElement("li");
-    li.textContent = taskText;
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+
+    // Обработчик для зачеркивания текста
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        li.style.textDecoration = "line-through";
+      } else {
+        li.style.textDecoration = "";
+      }
+    });
+
+    const taskSpan = document.createElement("span");
+    taskSpan.textContent = taskText;
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Удалить";
-    deleteBtn.addEventListener("click", () => {
-      this.deleteTask(li, taskText);
-    });
 
+    // Важный момент: делаете так, чтобы deleteTask знало, что удалять
+    deleteBtn.onclick = () => this.deleteTask(li, taskText);
+
+    // Собираем элементы внутри li
+    li.appendChild(checkbox);
+    li.appendChild(taskSpan);
     li.appendChild(deleteBtn);
+
     this.list.appendChild(li);
   };
 
+  // Метод для удаления задачи
   deleteTask = (li, taskText) => {
+    // Удаляем из массива задач
     this.tasks = this.tasks.filter((t) => t !== taskText);
+    // Удаляем элемент из DOM
     this.list.removeChild(li);
   };
 
   destroy() {
     super.destroy();
+  }
+
+  minimize() {
+    super.minimize();
   }
 }

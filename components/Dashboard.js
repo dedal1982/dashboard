@@ -15,7 +15,7 @@ export default class Dashboard {
 
     switch (widgetType) {
       case "todo":
-        widget = new ToDoWidget({ title: "Список задач", id });
+        widget = new ToDoWidget({ title: "Список дел", id });
         break;
 
       case "quote":

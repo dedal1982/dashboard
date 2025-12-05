@@ -48,7 +48,8 @@ body {
   margin-top: 15px;
   max-height: 300px;
   overflow-y: auto;
-  padding-right: 5px;
+  list-style-type: none;
+  padding: 0;
 }
 .button-top {
   background-color: #0078d0;

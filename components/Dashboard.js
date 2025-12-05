@@ -23,11 +23,7 @@ export default class Dashboard {
         break;
 
       case "currency":
-        widget = new CurrencyWidget({
-          title: "Курс валют",
-          id,
-          baseCurrency: "USD",
-        });
+        widget = new CurrencyWidget({ title: "Курсы валют", id });
         break;
 
       default:

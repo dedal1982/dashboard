@@ -1,110 +1,107 @@
 import UIComponent from "./UIComponent.js";
 
 export default class CurrencyWidget extends UIComponent {
-  constructor({ title, id, baseCurrency = "USD" }) {
+  constructor({ title = "Курсы валют", rates = null, id }) {
     super({ title, id });
-    this.baseCurrency = baseCurrency;
-    this.rates = {};
-    this.filteredRates = {};
+    this.rates = rates || {
+      USD: "95.45",
+      EUR: "102.30",
+      GBP: "118.20",
+    };
   }
 
-  render = () => {
+  render() {
     this.element = document.createElement("div");
     this.element.className = "widget currency";
 
     const header = document.createElement("h3");
-    header.textContent = this.title.title || "Без названия";
+    header.textContent = this.title.title;
 
-    // Контейнер для кнопок управления
     const controlsContainer = document.createElement("div");
     controlsContainer.style.display = "flex";
     controlsContainer.style.justifyContent = "flex-end";
     controlsContainer.style.gap = "5px";
 
-    // Кнопка "Удалить"
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Удалить";
-    deleteBtn.onclick = () => this.destroy();
+    const refreshBtn = document.createElement("button");
+    refreshBtn.className = "refresh-currency-btn";
+    refreshBtn.textContent = "Обновить курсы";
 
-    // Кнопка "Свернуть"
-    const collapseBtn = document.createElement("button");
-    collapseBtn.textContent = "Свернуть";
-    collapseBtn.onclick = () => this.minimize();
+    const minimizeBtn = document.createElement("button");
+    minimizeBtn.className = "minimize-btn";
+    minimizeBtn.textContent = "—";
 
-    controlsContainer.appendChild(collapseBtn);
-    controlsContainer.appendChild(deleteBtn);
+    refreshBtn.onclick = () => this.updateRates();
+    minimizeBtn.onclick = () => this.minimize();
 
-    // Элемент для управления виджетом
-    const controlsWrapper = document.createElement("div");
-    controlsWrapper.appendChild(controlsContainer);
+    controlsContainer.appendChild(minimizeBtn);
+    controlsContainer.appendChild(refreshBtn);
 
-    // Основное содержимое
     const contentDiv = document.createElement("div");
     contentDiv.className = "content";
 
-    this.searchInput = document.createElement("input");
-    this.searchInput.type = "text";
-    this.searchInput.placeholder = "Поиск валюты...";
-    this.searchInput.addEventListener("input", () => this.filterRates());
+    this.ratesContainer = document.createElement("div");
+    this.ratesContainer.className = "currency-info";
 
-    this.refreshBtn = document.createElement("button");
-    this.refreshBtn.textContent = "Обновить курсы";
+    this.renderRates();
 
-    this.list = document.createElement("ul");
-
-    contentDiv.appendChild(this.searchInput);
-    contentDiv.appendChild(this.refreshBtn);
-    contentDiv.appendChild(this.list);
+    const note = document.createElement("div");
+    note.className = "currency-note";
 
     this.element.appendChild(header);
-    this.element.appendChild(controlsWrapper);
+    this.element.appendChild(controlsContainer);
     this.element.appendChild(contentDiv);
-
-    this.refreshBtn.addEventListener("click", () => this.fetchRates());
-
-    this.fetchRates();
+    contentDiv.appendChild(this.ratesContainer);
+    contentDiv.appendChild(note);
 
     return this.element;
-  };
+  }
 
-  fetchRates = () => {
-    fetch(`https://api.exchangerate-api.com/v4/latest/${this.baseCurrency}`)
+  renderRates() {
+    this.ratesContainer.innerHTML = `
+      <div class="currency-rates">
+        <div class="currency-rate">
+          <span>USD/RUB:</span>
+          <span>${this.rates.USD}</span>
+        </div>
+        <div class="currency-rate">
+          <span>EUR/RUB:</span>
+          <span>${this.rates.EUR}</span>
+        </div>
+        <div class="currency-rate">
+          <span>GBP/RUB:</span>
+          <span>${this.rates.GBP}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  updateRates() {
+    fetch("https://www.cbr-xml-daily.ru/daily_json.js")
       .then((response) => response.json())
       .then((data) => {
-        this.rates = data.rates;
-        this.filterRates();
+        const usdRate = data.Valute.USD.Value.toFixed(2);
+        const eurRate = data.Valute.EUR.Value.toFixed(2);
+        const gbpRate = data.Valute.GBP.Value.toFixed(2);
+
+        this.rates = {
+          USD: usdRate,
+          EUR: eurRate,
+          GBP: gbpRate,
+        };
+        this.renderRates();
+
+        if (typeof this.onStateChange === "function") {
+          this.onStateChange();
+        }
       })
       .catch((error) => {
-        this.list.innerHTML = "<li>Ошибка загрузки данных</li>";
+        console.error("Ошибка получения курса валют:", error);
       });
-  };
-
-  filterRates = () => {
-    const query = this.searchInput.value.toLowerCase();
-    this.filteredRates = {};
-
-    for (const [currency, rate] of Object.entries(this.rates)) {
-      if (currency.toLowerCase().includes(query)) {
-        this.filteredRates[currency] = rate;
-      }
-    }
-    this.renderRates();
-  };
-
-  renderRates = () => {
-    this.list.innerHTML = "";
-    for (const [currency, rate] of Object.entries(this.filteredRates)) {
-      const li = document.createElement("li");
-      li.textContent = `${currency}: ${rate}`;
-      this.list.appendChild(li);
-    }
-  };
-
-  destroy() {
-    super.destroy();
   }
 
   minimize() {
-    super.minimize();
+    if (this.element) {
+      this.element.classList.toggle("minimized");
+    }
   }
 }

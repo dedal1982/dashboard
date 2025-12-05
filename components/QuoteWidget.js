@@ -19,15 +19,18 @@ export default class QuoteWidget extends UIComponent {
     controlsContainer.style.justifyContent = "flex-end";
     controlsContainer.style.gap = "5px";
 
-    // Кнопка "Удалить"
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Удалить";
+    deleteBtn.className = "delete-btn";
+    deleteBtn.textContent = "✕";
     deleteBtn.onclick = () => this.destroy();
 
-    // Кнопка "Свернуть"
     const collapseBtn = document.createElement("button");
-    collapseBtn.textContent = "Свернуть";
+    collapseBtn.className = "collapse-btn";
+    collapseBtn.textContent = "—";
     collapseBtn.onclick = () => this.minimize();
+
+    controlsContainer.appendChild(collapseBtn);
+    controlsContainer.appendChild(deleteBtn);
 
     controlsContainer.appendChild(collapseBtn);
     controlsContainer.appendChild(deleteBtn);
@@ -44,6 +47,7 @@ export default class QuoteWidget extends UIComponent {
     this.quoteText.textContent = "Здесь будет цитата";
 
     const refreshBtn = document.createElement("button");
+    refreshBtn.className = "add-btn";
     refreshBtn.textContent = "Обновить цитату";
 
     refreshBtn.addEventListener("click", () => this.loadQuote());

@@ -19,7 +19,8 @@ export default class ToDoWidget extends UIComponent {
     controlsContainer.style.gap = "5px";
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Удалить";
+    deleteBtn.className = "delete-btn";
+    deleteBtn.textContent = "X";
     deleteBtn.onclick = () => this.destroy();
 
     const collapseBtn = document.createElement("button");
@@ -69,7 +70,6 @@ export default class ToDoWidget extends UIComponent {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
 
-    // Обработчик для зачеркивания текста
     checkbox.addEventListener("change", () => {
       if (checkbox.checked) {
         li.style.textDecoration = "line-through";
@@ -84,10 +84,8 @@ export default class ToDoWidget extends UIComponent {
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Удалить";
 
-    // Важный момент: делаете так, чтобы deleteTask знало, что удалять
     deleteBtn.onclick = () => this.deleteTask(li, taskText);
 
-    // Собираем элементы внутри li
     li.appendChild(checkbox);
     li.appendChild(taskSpan);
     li.appendChild(deleteBtn);
@@ -95,11 +93,9 @@ export default class ToDoWidget extends UIComponent {
     this.list.appendChild(li);
   };
 
-  // Метод для удаления задачи
   deleteTask = (li, taskText) => {
-    // Удаляем из массива задач
     this.tasks = this.tasks.filter((t) => t !== taskText);
-    // Удаляем элемент из DOM
+
     this.list.removeChild(li);
   };
 

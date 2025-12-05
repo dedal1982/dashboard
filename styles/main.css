@@ -44,6 +44,9 @@ body {
   position: relative;
   flex-shrink: 1;
 }
+.widget H3 {
+  text-transform: uppercase;
+}
 #dashboard-container ul {
   margin-top: 15px;
   max-height: 300px;
@@ -177,6 +180,9 @@ body {
   color: #000;
   width: 50%;
   overflow: hidden;
+}
+.currency-info {
+  margin: 16px 0 8px 16px;
 }
 @media (min-width: 768px) {
   .button-top {

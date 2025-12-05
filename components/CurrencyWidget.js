@@ -4,9 +4,9 @@ export default class CurrencyWidget extends UIComponent {
   constructor({ title = "Курсы валют", rates = null, id }) {
     super({ title, id });
     this.rates = rates || {
-      USD: "95.45",
-      EUR: "102.30",
-      GBP: "118.20",
+      USD: "~",
+      EUR: "~",
+      GBP: "~",
     };
   }
 
@@ -30,17 +30,15 @@ export default class CurrencyWidget extends UIComponent {
     const refreshBtn = document.createElement("button");
     refreshBtn.className = "add-btn";
     refreshBtn.textContent = "Обновить курсы";
-
-    const minimizeBtn = document.createElement("button");
-    minimizeBtn.className = "collapse-btn";
-    minimizeBtn.textContent = "—";
-
     refreshBtn.onclick = () => this.updateRates();
-    controlsContainer.appendChild(deleteBtn);
-    minimizeBtn.onclick = () => this.minimize();
 
-    controlsContainer.appendChild(minimizeBtn);
-    controlsContainer.appendChild(refreshBtn);
+    const collapseBtn = document.createElement("button");
+    collapseBtn.className = "collapse-btn";
+    collapseBtn.textContent = "—";
+    collapseBtn.onclick = () => this.minimize();
+
+    controlsContainer.appendChild(deleteBtn);
+    controlsContainer.appendChild(collapseBtn);
 
     const contentDiv = document.createElement("div");
     contentDiv.className = "content";
@@ -58,6 +56,7 @@ export default class CurrencyWidget extends UIComponent {
     this.element.appendChild(contentDiv);
     contentDiv.appendChild(this.ratesContainer);
     contentDiv.appendChild(note);
+    contentDiv.appendChild(refreshBtn);
 
     return this.element;
   }

@@ -22,15 +22,21 @@ export default class CurrencyWidget extends UIComponent {
     controlsContainer.style.justifyContent = "flex-end";
     controlsContainer.style.gap = "5px";
 
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-btn";
+    deleteBtn.textContent = "✕";
+    deleteBtn.onclick = () => this.destroy();
+
     const refreshBtn = document.createElement("button");
-    refreshBtn.className = "refresh-currency-btn";
+    refreshBtn.className = "add-btn";
     refreshBtn.textContent = "Обновить курсы";
 
     const minimizeBtn = document.createElement("button");
-    minimizeBtn.className = "minimize-btn";
+    minimizeBtn.className = "collapse-btn";
     minimizeBtn.textContent = "—";
 
     refreshBtn.onclick = () => this.updateRates();
+    controlsContainer.appendChild(deleteBtn);
     minimizeBtn.onclick = () => this.minimize();
 
     controlsContainer.appendChild(minimizeBtn);
@@ -99,9 +105,11 @@ export default class CurrencyWidget extends UIComponent {
       });
   }
 
+  destroy() {
+    super.destroy();
+  }
+
   minimize() {
-    if (this.element) {
-      this.element.classList.toggle("minimized");
-    }
+    super.minimize();
   }
 }
